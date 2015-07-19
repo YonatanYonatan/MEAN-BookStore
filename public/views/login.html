@@ -1,0 +1,9 @@
+<div class="container">
+    <form class="form-login" ng-submit="loginCtrl.submit()">
+        <h2 class="form-login-h2">Login to BookIt</h2>
+        <input type="email" ng-model="loginCtrl.username" class="form-control ng-class:{error: loginCtrl.error}" placeholder="Email address" required>
+        <input type="password" ng-model="loginCtrl.password" class="form-control ng-class:{error: loginCtrl.error}" placeholder="Password" required>
+        <button class="form-login-button btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        <h4 ng-show="loginCtrl.error">wrong username/password</h4>
+    </form>
+</div>

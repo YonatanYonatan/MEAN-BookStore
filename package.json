@@ -1,0 +1,14 @@
+{
+  "name": "BookStore",
+  "version": "1.0.1",
+  "main": "super-server.js",
+  "dependencies":
+  {
+    "express": "latest",
+    "mongoose": "latest",
+    "body-parser": "latest",
+    "fs-extra": "latest",
+    "connect-busboy": "latest",
+    "method-override": "latest"
+  }
+}
