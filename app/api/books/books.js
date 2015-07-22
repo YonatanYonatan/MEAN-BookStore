@@ -4,7 +4,8 @@ module.exports = {
     getBooks: getBooks,
     addBook: addBook,
     editBook: editBook,
-    deleteBook: deleteBook
+    deleteBook: deleteBook,
+    searchBook: searchBook
 };
 
 function getBooks(req, res){
@@ -19,6 +20,13 @@ function getBooks(req, res){
 
         res.json(books);
     });
+}
+
+function searchBook(req, res){
+
+    console.log('search book');
+
+    Book.find({})
 }
 
 function addBook(req, res){
@@ -62,6 +70,14 @@ function editBook(req, res){
         }
         if (req.body.link == "") {
             req.body.link = book.link;
+        }
+
+        if (req.body.link != "") {
+            req.body.cover = "";
+        }
+
+        if (req.body.cover != "") {
+            req.body.link = "";
         }
 
         Book.findByIdAndUpdate( req.body.id, req.body ,function(err, book){

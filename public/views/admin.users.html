@@ -64,7 +64,7 @@
                                     <ul>
                                         <li ng-repeat="item in usersCtrl.uploader.queue">
                                             Name: <span ng-bind="item.file.name"></span><br>
-                                            <button class="btn btn-primary" ng-click="usersCtrl.submit() ; item.upload()">Create with file!</button>
+                                            <button class="btn btn-primary" ng-click="usersCtrl.submit() ; item.upload()" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Create with file!</button>
                                         </li>
                                     </ul>
                                 </div>
