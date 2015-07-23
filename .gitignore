@@ -33,4 +33,4 @@ node_modules
 .png
 .jpeg
 
-public/libs
+libs
