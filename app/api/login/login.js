@@ -1,4 +1,5 @@
 var User            = require('../../models/user');
+var jwt             = require('jsonwebtoken');
 
 module.exports = {
     login: login
@@ -8,29 +9,39 @@ function login(req, res) {
 
     console.log('login ' + req.body.username + ' ' + req.body.password);
 
-    User.find({'username': req.body.username, 'password': req.body.password}, function(err, users){
+    User.findOne({username: req.body.username, password: req.body.password}, function(err, user){
+
         if(err){
-            res.send(err);
+            res.json({
+                success: false,
+                message: "Error occurred: "+ err
+            });
         }
 
         else{
 
-            if(users.length == 0){
+            if(user){
 
-                res.send('Forbidden');
+                var token = jwt.sign(user, 'jsonwebtokenisoverrated', {
+                    expiresInMinutes: 1440
+                });
+
+                res.json({
+                    success: true,
+                    message: {
+                        name: user.name,
+                        role: user.role
+                    },
+                    token: token
+                });
             }
 
             else {
 
-                var user = users[0];
-
-                res.send(
-                    {
-                        username: user.username,
-                        name: user.name,
-                        role: user.role
-                    }
-                )
+                res.json({
+                    success: false,
+                    message: "Incorrect email/password"
+                })
 
             }
 

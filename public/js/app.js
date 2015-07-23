@@ -4,7 +4,6 @@
 angular.module('bookStoreApp',
     [
         'ui.router',
-        'ngCookies',
         'BooksManagerService',
         'UsersManagerService',
         'AuthService',
@@ -19,5 +18,6 @@ angular.module('bookStoreApp',
         'appRoutes',
         'angularFileUpload',
         'ui.bootstrap',
-        'appRun'
+        'appRun',
+        'ngStorage'
     ]);

@@ -26,7 +26,7 @@ module.exports = function(app){
     // route to handle all angular requests
 
     app.get('*', function(req, res) {
-        res.sendStatus(404);
+        res.sendfile("public/index.html");
     });
 
 };

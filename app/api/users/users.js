@@ -11,31 +11,82 @@ function addUser(req, res){
 
     console.log('insert user');
 
-    var user = new User(
-        {
-            name: req.body.name,
-            username: req.body.username,
-            password: req.body.password,
-            role: req.body.role,
-            photo: req.body.photo
+    if (req.user.role != 'admin'){
+
+        return res.status(403).send({
+            success: false,
+            message: "Permission denied"
+        });
+
+    }
+
+    User.findOne({username: req.body.username, password: req.body.password}, function(err,user){
+
+        if (err){
+            return res.json({
+                success: false,
+                message: "Error occurred: " + err
+            });
         }
-    );
-    user.save(function(err, user){
-        if(err){
-            res.send(err);
+
+        else {
+            if (user){
+                res.json({
+                    success: false,
+                    message: "User already exists!"
+                });
+            }
+
+            else {
+
+                var userModel = new User(
+                    {
+                        name: req.body.name,
+                        username: req.body.username,
+                        password: req.body.password,
+                        role: req.body.role,
+                        photo: req.body.photo
+                    }
+                );
+
+                userModel.save(function(err, user){
+                    if(err){
+                        return res.json({
+                            success: false,
+                            message: "Error occurred: " + err
+                        })
+                    }
+
+                    res.status(200).send({
+                        success: true,
+                        message: "User added"
+                    });
+                })
+            }
         }
-        res.sendStatus(200);
-    })
+    });
 }
 
 function promoteUser(req, res){
+
+    if (req.user.role != 'admin'){
+
+        return res.status(403).send({
+            success: false,
+            message: "Permission denied"
+        });
+
+    }
 
     console.log('promote user');
 
     User.findById(req.body._id, function(err, user){
 
         if(err){
-            res.send(err);
+            return res.json({
+                success: false,
+                message: "Error occurred: " + err
+            });
         }
 
         if(user.role == 'reader'){
@@ -47,10 +98,16 @@ function promoteUser(req, res){
 
         User.findByIdAndUpdate(req.body._id, req.body, function(err, user){
             if(err){
-                console.log(error);
-                res.send(err);
+                return res.json({
+                    success: false,
+                    message: "Error occurred: " + err
+                });
             }
-            res.sendStatus(200);
+
+            res.status(200).send({
+                success: true,
+                message: "User promoted"
+            });
         })
     });
 
@@ -58,12 +115,24 @@ function promoteUser(req, res){
 
 function demoteUser(req, res){
 
+    if (req.user.role != 'admin'){
+
+        return res.status(403).send({
+            success: false,
+            message: "Permission denied"
+        });
+
+    }
+
     console.log('demote user');
 
     User.findById(req.body._id, function(err, user){
 
         if(err){
-            res.send(err);
+            return res.json({
+                success: false,
+                message: "Error occurred: " + err
+            });
         }
 
         if(user.role == 'admin'){
@@ -75,10 +144,15 @@ function demoteUser(req, res){
 
         User.findByIdAndUpdate(req.body._id, req.body, function(err, user){
             if(err){
-                console.log(error);
-                res.send(err);
+                return res.json({
+                    success: false,
+                    message: "Error occurred: " + err
+                });
             }
-            res.sendStatus(200);
+            res.status(200).send({
+                success: true,
+                message: "User demoted"
+            });
         })
     });
 
@@ -86,15 +160,30 @@ function demoteUser(req, res){
 
 function getUsers(req, res){
 
+    if (req.user.role != 'admin'){
+
+        return res.status(403).send({
+            success: false,
+            message: "Permission denied"
+        });
+
+    }
+
     console.log('get users');
 
     User.find({role: req.params.role},function(err, users){
 
         if(err){
-            res.send(err);
+            return res.json({
+                success: false,
+                message: "Error occurred: " + err
+            });
         }
 
-        res.json(users);
+        res.status(200).send({
+            success: true,
+            message: users
+        });
     });
 
 }

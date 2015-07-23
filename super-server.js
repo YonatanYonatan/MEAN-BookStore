@@ -17,6 +17,7 @@ var db              = require('./config/db');
 var port            = process.env.PORT || 3000;
 
 mongoose.connect(db.url);
+app.set('superSecret', db.secret);
 
 // express settings
 

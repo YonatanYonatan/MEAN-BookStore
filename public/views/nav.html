@@ -13,7 +13,7 @@
 
             </button>
 
-            <a class="navbar-brand" href="/home">
+            <a class="navbar-brand" ui-sref="home">
                 <img alt="Brand" src="http://static-marketing.como.com/images/site/2015/05/como-footer-logo-r-light.png">
             </a>
 
@@ -24,10 +24,10 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><h4><label class="label label-success">Welcome, {{navCtrl.name}}</label></h4></li>
-                <li><a href="/login"><span class="glyphicon glyphicon-globe"></span>Logout</a></li>
-                <li><a href="/about"><span class="glyphicon glyphicon-flag"></span>About</a></li>
-                <li ng-hide="navCtrl.role == 'reader'"><a href="/add_book"><span class="glyphicon glyphicon-plus"></span>Add Book</a></li>
-                <li ng-show="navCtrl.role == 'admin'"><a href="/admin"><span class="glyphicon glyphicon-user"></span>Admin</a></li>
+                <li><a ui-sref="login" ng-click="navCtrl.logout()"><span class="glyphicon glyphicon-globe"></span>Logout</a></li>
+                <li><a ui-sref="about"><span class="glyphicon glyphicon-flag"></span>About</a></li>
+                <li ng-hide="navCtrl.role == 'reader'"><a ui-sref="addBook"><span class="glyphicon glyphicon-plus"></span>Add Book</a></li>
+                <li ng-show="navCtrl.role == 'admin'"><a ui-sref="admin"><span class="glyphicon glyphicon-user"></span>Admin</a></li>
             </ul>
 
         </div>

@@ -1,11 +1,15 @@
 angular.module('NavController', [])
 
-    .controller('NavController', ['AuthService', function(AuthService){
+    .controller('NavController', ['$localStorage','$state', function($localStorage,$state){
 
         var vm = this;
 
-        vm.name = AuthService.getName();
+        vm.name = $localStorage.name;
+        vm.role = $localStorage.role;
 
-        vm.role = AuthService.getRole();
+        vm.logout = function(){
+
+            $localStorage.$reset();
+        }
 
     }]);

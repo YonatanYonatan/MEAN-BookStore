@@ -1,5 +1,4 @@
 body {
-    padding: 40px 0 40px 0;
     background-color: #eee;
 }
 
@@ -10,7 +9,10 @@ body {
 }
 
 .form-login .form-login-h2 {
-    margin-bottom: 10px;
+
+    text-align: center;
+    color: #0086B3;
+    padding: 20px auto 10px auto;
 }
 
 .form-login .form-login-button {
@@ -22,4 +24,13 @@ body {
     outline: none;
     border: 1px solid red;
     box-shadow: 0 0 10px #719ECE;
+}
+
+#login-image {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    position: fixed;
+    background: url("http://topwalls.net/wallpapers/2012/02/new-york-citynew-york-city-768x1024.jpg") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
 }

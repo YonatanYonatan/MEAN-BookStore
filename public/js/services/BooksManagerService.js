@@ -3,7 +3,7 @@
  */
 angular.module('BooksManagerService', [])
 
-    .factory('BooksManagerService', ['$http', function($http) {
+    .factory('BooksManagerService', ['$http','$localStorage', function($http,$localStorage) {
 
         var books = {
             list: []
@@ -11,12 +11,15 @@ angular.module('BooksManagerService', [])
 
         var obj = {};
 
+        $http.defaults.headers.common['x-access-token'] = $localStorage.token;
+
         obj.books = books;
 
         obj.get = function(){
             return $http.get('/api/books')
-                .then(function(booksData){
-                    books.list = booksData.data;
+                .then(function(res){
+                    var obj = res.data;
+                    books.list = obj.message;
                 });
         };
 

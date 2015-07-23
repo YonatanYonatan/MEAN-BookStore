@@ -61,8 +61,13 @@ angular.module('appRoutes', [])
 
                 data:
                 {
-                    requireLogin: false
+                    requireLogin: false,
+                    permissions:
+                    {
+                        role: []
+                    }
                 }
+
             })
             .state('home',
             {
@@ -85,8 +90,13 @@ angular.module('appRoutes', [])
 
                 data:
                 {
-                    requireLogin: true
+                    requireLogin: true,
+                    permissions:
+                    {
+                        role: ["reader","publisher","admin"]
+                    }
                 }
+
             })
             .state('addBook',
             {
@@ -111,7 +121,11 @@ angular.module('appRoutes', [])
 
                 data:
                 {
-                    requireLogin: true
+                    requireLogin: true,
+                    permissions:
+                    {
+                        role: ["publisher","admin"]
+                    }
                 }
             })
             .state('admin',
@@ -136,7 +150,11 @@ angular.module('appRoutes', [])
                 },
                 data:
                 {
-                    requireLogin: true
+                    requireLogin: true,
+                    permissions:
+                    {
+                        role: ["admin"]
+                    }
                 }
             })
             .state('admin.users',
@@ -149,6 +167,15 @@ angular.module('appRoutes', [])
                         controller: 'UsersController',
                         controllerAs: 'usersCtrl'
                     }
+                },
+
+                data:
+                {
+                    requireLogin: true,
+                    permissions:
+                    {
+                        role: ["admin"]
+                    }
                 }
             })
             .state('admin.books',
@@ -158,6 +185,15 @@ angular.module('appRoutes', [])
                     '':
                     {
                         templateUrl: "views/admin.books.html"
+                    }
+                },
+
+                data:
+                {
+                    requireLogin: true,
+                    permissions:
+                    {
+                        role: ["admin"]
                     }
                 }
             })
@@ -182,7 +218,11 @@ angular.module('appRoutes', [])
 
                 data:
                 {
-                    requireLogin: false
+                    requireLogin: true,
+                    permissions:
+                    {
+                        role: ["reader", "publisher", "admin"]
+                    }
                 }
             })
 

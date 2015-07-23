@@ -9,6 +9,7 @@
     "body-parser": "latest",
     "fs-extra": "latest",
     "connect-busboy": "latest",
-    "method-override": "latest"
+    "method-override": "latest",
+    "jsonwebtoken": "latest"
   }
 }

@@ -1,6 +1,6 @@
 angular.module('UsersManagerService', [])
 
-    .factory('UsersManagerService', ['$http', function ($http) {
+    .factory('UsersManagerService', ['$http','$localStorage', function ($http,$localStorage) {
 
         var users = {
 
@@ -21,18 +21,26 @@ angular.module('UsersManagerService', [])
 
             return $http.get('/api/users/'+role)
                 .then(function(usersData){
-                    users.list = usersData.data;
+                    users.list = usersData.data.message;
                 })
         };
 
         obj.promote = function(user){
 
-            return $http.put('/api/users/promote', user);
+            return $http.put('/api/users/promote', user)
+                .then(function(d){
+                    $localStorage.$reset();
+                    obj.get();
+                });
         };
 
         obj.demote = function(user){
 
-            return $http.put('/api/users/demote', user);
+            return $http.put('/api/users/demote', user)
+                .then(function(d){
+                    $localStorage.$reset();
+                    obj.get();
+                });
         }
 
         return obj;

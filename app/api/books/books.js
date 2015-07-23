@@ -5,7 +5,6 @@ module.exports = {
     addBook: addBook,
     editBook: editBook,
     deleteBook: deleteBook,
-    searchBook: searchBook
 };
 
 function getBooks(req, res){
@@ -15,23 +14,33 @@ function getBooks(req, res){
     Book.find({},function(err, books){
 
         if(err){
-            res.send(err);
+            res.json({
+                success: false,
+                message: "Error occurred: " + err
+            });
         }
 
-        res.json(books);
+        else {
+            res.json({
+                success: true,
+                message: books
+            });
+        }
     });
-}
-
-function searchBook(req, res){
-
-    console.log('search book');
-
-    Book.find({})
 }
 
 function addBook(req, res){
 
     console.log('insert book');
+
+    if (req.user.role == 'reader'){
+
+        return res.status(403).send({
+            success: false,
+            message: "Permission denied"
+        });
+
+    }
 
     var book = new Book(
         {
@@ -42,17 +51,33 @@ function addBook(req, res){
             cover: req.body.cover
         }
     );
+
     book.save(function(err, book){
         if(err){
-            res.send(err);
+            res.json({
+                success: false,
+                message: "Error occured: " + err
+            });
         }
-        res.sendStatus(200);
+        res.status(200).send({
+            success: true,
+            message: "New book inserted"
+        });
     })
 }
 
 function editBook(req, res){
 
     console.log('edit book');
+
+    if (req.user.role == 'reader'){
+
+        return res.status(403).send({
+            success: false,
+            message: "Permission denied"
+        });
+
+    }
 
     Book.findById( req.body.id, function(err, book){
 
@@ -83,10 +108,15 @@ function editBook(req, res){
         Book.findByIdAndUpdate( req.body.id, req.body ,function(err, book){
 
             if(err){
-                console.log(err);
-                res.send(err);
+                res.json({
+                    success: false,
+                    message: "Error occured: " + err
+                });
             }
-            res.sendStatus(200);
+            res.status(200).send({
+                success: true,
+                message: "Book edited"
+            });
         });
     });
 
@@ -94,14 +124,27 @@ function editBook(req, res){
 
 function deleteBook(req, res){
 
-
     console.log('delete book');
+
+    if (req.user.role == 'reader'){
+
+        return res.status(403).send({
+            success: false,
+            message: "Permission denied"
+        });
+
+    }
 
     Book.findByIdAndRemove(req.params.id, function(err, book){
         if(err){
-            console.log(err);
-            res.send(err);
+            res.json({
+                success: false,
+                message: "Error occurred: " + err
+            });
         }
-        res.sendStatus(200);
+        res.status(200).send({
+            success: true,
+            message: "Book deleted"
+        });
     });
 }
